@@ -28,11 +28,11 @@
               </tr>
               <tr>
                 <td>Rol</td>
-                <td>{{ user.authorities[0].authority }}</td>
+                <td>{{ user.authorities[0].authority | removeRolePrefix }}</td>
               </tr>
               <tr>
                 <td>Estado</td>
-                <td>{{ user.enabled ? "Activo" : "No activo"}}</td>
+                <td>{{ user.estado ? "No activo" : "Activo"}}</td>
               </tr>
             </table>
           </div>

@@ -13,23 +13,23 @@ export class LoginService {
   constructor(private http:HttpClient) { }
 
   //generamos el token
-  public generateToken(loginData:any){
-    return this.http.post(`${baserUrl}/generate-token`,loginData);
+  public generatejwt(loginData:any){
+    return this.http.post(`${baserUrl}/login`,loginData);
   }
 
   public getCurrentUser(){
-    return this.http.get(`${baserUrl}/actual-usuario`);
+    return this.http.get(`${baserUrl}/login`);
   }
 
   //iniciamos sesión y establecemos el token en el localStorage
-  public loginUser(token:any){
-    localStorage.setItem('token',token);
+  public loginUser(jwt:any){
+    localStorage.setItem('jwt',jwt);
     return true;
   }
 
   public isLoggedIn(){
-    let tokenStr = localStorage.getItem('token');
-    if(tokenStr == undefined || tokenStr == '' || tokenStr == null){
+    let jwtStr = localStorage.getItem('jwt');
+    if(jwtStr == undefined || jwtStr == '' || jwtStr == null){
       return false;
     }else{
       return true;
@@ -38,14 +38,14 @@ export class LoginService {
 
   //cerranis sesion y eliminamos el token del localStorage
   public logout(){
-    localStorage.removeItem('token');
+    localStorage.removeItem('jwt');
     localStorage.removeItem('user');
     return true;
   }
 
   //obtenemos el token
-  public getToken(){
-    return localStorage.getItem('token');
+  public getjwt(){
+    return localStorage.getItem('jwt');
   }
 
   public setUser(user:any){

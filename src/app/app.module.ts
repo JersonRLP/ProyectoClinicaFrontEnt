@@ -25,23 +25,22 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import { authInterceptorProviders } from './services/auth.interceptor';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
-import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboard.component';
+
 import { ProfileComponent } from './pages/profile/profile.component';
 import { SidebarComponent } from './pages/admin/sidebar/sidebar.component';
 import { WelcomeComponent } from './pages/admin/welcome/welcome.component';
-import { ViewCategoriasComponent } from './pages/admin/view-categorias/view-categorias.component';
-import { AddCategoriaComponent } from './pages/admin/add-categoria/add-categoria.component';
-import { ViewExamenesComponent } from './pages/admin/view-examenes/view-examenes.component';
-import { AddExamenComponent } from './pages/admin/add-examen/add-examen.component';
-import { ActualizarExamenComponent } from './pages/admin/actualizar-examen/actualizar-examen.component';
-import { ViewExamenPreguntasComponent } from './pages/admin/view-examen-preguntas/view-examen-preguntas.component';
-import { AddPreguntaComponent } from './pages/admin/add-pregunta/add-pregunta.component';
-import { ActualizarPreguntaComponent } from './pages/admin/actualizar-pregunta/actualizar-pregunta.component';
-import { SidebarComponent as UserSidebar} from './pages/user/sidebar/sidebar.component';
-import { LoadExamenComponent } from './pages/user/load-examen/load-examen.component';
-import { InstruccionesComponent } from './pages/user/instrucciones/instrucciones.component';
-import { StartComponent } from './pages/user/start/start.component';
+
+
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
 import { NgxUiLoaderModule , NgxUiLoaderHttpModule } from "ngx-ui-loader";
+import { RemoveRolePrefixPipe } from './remove-role-prefix.pipe';
+import { UsuarioComponent } from './pages/admin/usuario/usuario.component';
+import { ActualizarUsuarioModalComponent } from './pages/admin/actualizar-usuario-modal/actualizar-usuario-modal.component';
+import { CitaMedicaComponent } from './pages/admin/cita-medica/cita-medica.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { HistorialMedicoComponent } from './pages/admin/historial-medico/historial-medico.component';
+
 
 @NgModule({
   declarations: [
@@ -51,22 +50,14 @@ import { NgxUiLoaderModule , NgxUiLoaderHttpModule } from "ngx-ui-loader";
     LoginComponent,
     HomeComponent,
     DashboardComponent,
-    UserDashboardComponent,
+    UsuarioComponent,
     ProfileComponent,
     SidebarComponent,
     WelcomeComponent,
-    ViewCategoriasComponent,
-    AddCategoriaComponent,
-    ViewExamenesComponent,
-    AddExamenComponent,
-    ActualizarExamenComponent,
-    ViewExamenPreguntasComponent,
-    AddPreguntaComponent,
-    ActualizarPreguntaComponent,
-    UserSidebar,
-    LoadExamenComponent,
-    InstruccionesComponent,
-    StartComponent
+    HistorialMedicoComponent,
+    RemoveRolePrefixPipe,
+    ActualizarUsuarioModalComponent,
+    CitaMedicaComponent
   ],
   imports: [
     BrowserModule,
@@ -85,7 +76,12 @@ import { NgxUiLoaderModule , NgxUiLoaderHttpModule } from "ngx-ui-loader";
     MatSlideToggleModule,
     MatSelectModule,
     MatProgressSpinnerModule,
-    NgxUiLoaderModule,
+    NgxUiLoaderModule, 
+    BrowserModule,
+    FormsModule,
+    MatDialogModule,
+    MatPaginatorModule,
+    MatTableModule,
     NgxUiLoaderHttpModule.forRoot({
       showForeground:true
     })

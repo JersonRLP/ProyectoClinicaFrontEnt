@@ -11,7 +11,7 @@ import { Component, OnInit } from '@angular/core';
 export class LoginComponent implements OnInit {
 
   loginData = {
-    "username" : '',
+    "usuario" : '',
     "password" : '',
   }
 
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   }
 
   formSubmit(){
-    if(this.loginData.username.trim() == '' || this.loginData.username.trim() == null){
+    if(this.loginData.usuario.trim() == '' || this.loginData.usuario.trim() == null){
       this.snack.open('El nombre de usuario es requerido !!','Aceptar',{
         duration:3000
       })
@@ -35,26 +35,21 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.loginService.generateToken(this.loginData).subscribe(
+    this.loginService.generatejwt(this.loginData).subscribe(
       (data:any) => {
         console.log(data);
-        this.loginService.loginUser(data.token);
+        this.loginService.loginUser(data.jwt);
         this.loginService.getCurrentUser().subscribe((user:any) => {
           this.loginService.setUser(user);
           console.log(user);
 
-          if(this.loginService.getUserRole() == 'ADMIN'){
+          if(this.loginService.getUserRole() == 'ROLE_ADMIN'){
             //dashboard admin
             //window.location.href = '/admin';
             this.router.navigate(['admin']);
             this.loginService.loginStatusSubjec.next(true);
           }
-          else if(this.loginService.getUserRole() == 'NORMAL'){
-            //user dashboard
-            //window.location.href = '/user-dashboard';
-            this.router.navigate(['user-dashboard/0']);
-            this.loginService.loginStatusSubjec.next(true);
-          }
+
           else{
             this.loginService.logout();
           }

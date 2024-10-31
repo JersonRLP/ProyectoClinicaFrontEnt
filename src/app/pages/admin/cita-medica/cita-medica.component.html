@@ -1,0 +1,100 @@
+<div class="container">
+    <mat-card>
+      <mat-card-content>
+        <h2>Lista de Citas Médicas</h2>
+  
+        <!-- Botón para abrir el modal -->
+        <button mat-raised-button color="primary" (click)="abrirModalRegistro()">Registrar Cita</button>
+  
+        <!-- Tabla de citas médicas -->
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">
+          <!-- Columnas de la tabla -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let cita"> {{ cita.id }} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="paciente">
+            <th mat-header-cell *matHeaderCellDef> Paciente </th>
+            <td mat-cell *matCellDef="let cita"> {{ cita.paciente.nombre }} {{ cita.paciente.apellido }} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="medico">
+            <th mat-header-cell *matHeaderCellDef> Médico </th>
+            <td mat-cell *matCellDef="let cita"> {{ cita.medico.nombre }} {{ cita.medico.apellido }} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="fechaCita">
+            <th mat-header-cell *matHeaderCellDef> Fecha de Cita </th>
+            <td mat-cell *matCellDef="let cita"> {{ cita.fechaCita | date }} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="motivoCita">
+            <th mat-header-cell *matHeaderCellDef> Motivo de Cita </th>
+            <td mat-cell *matCellDef="let cita"> {{ cita.motivoCita }} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+  
+        <!-- Paginador -->
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </mat-card-content>
+    </mat-card>
+  
+ <!-- Modal de registro de cita médica -->
+ <div class="modal-overlay" *ngIf="modalRegistroAbierto">
+    <div class="modal">
+      <mat-card>
+        <mat-card-content>
+          <h2>Registrar Nueva Cita Médica</h2>
+
+          <!-- Formulario de registro de cita médica -->
+
+
+          <form (ngSubmit)="registrarCitaMedica()" class="modal-form">
+
+            <mat-form-field>
+              <mat-label>Fecha de Cita</mat-label>
+              <input matInput [(ngModel)]="nuevaCitaMedica.fechaCita" name="fechaCita" type="date" required>
+            </mat-form-field>   
+
+
+            <mat-form-field>
+              <mat-label>Paciente</mat-label>
+              <input matInput [(ngModel)]="nuevaCitaMedica.paciente.id" name="pacienteNombre" required>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Médico</mat-label>
+              <input matInput [(ngModel)]="nuevaCitaMedica.medico.id" name="medicoNombre" required>
+            </mat-form-field>
+
+            
+            
+            <mat-form-field>
+                <mat-label>Estado</mat-label>
+                <mat-select [(ngModel)]="nuevaCitaMedica.estado" name="estado">
+                  <mat-option *ngFor="let estado of estados" [value]="estado.valor">
+                    {{ estado.nombre }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              
+            <mat-form-field>
+              <mat-label>Motivo de Cita</mat-label>
+              <textarea matInput [(ngModel)]="nuevaCitaMedica.motivoCita" name="motivoCita" required></textarea>
+            </mat-form-field>
+
+            <div class="modal-footer">
+              <button mat-raised-button color="primary" type="submit">Registrar</button>
+              <button mat-raised-button color="warn" type="button" (click)="cerrarModalRegistro()">Cancelar</button>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+  

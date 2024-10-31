@@ -1,0 +1,147 @@
+<div class="container">
+  <mat-card>
+    <mat-card-content>
+      <h2>Lista de Usuarios</h2>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">
+        <!-- Columnas de la tabla -->
+        <ng-container matColumnDef="usuario">
+          <th mat-header-cell *matHeaderCellDef> Usuario </th>
+          <td mat-cell *matCellDef="let usuario"> {{ usuario.usuario }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let usuario"> {{ usuario.nombre }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="apellido">
+          <th mat-header-cell *matHeaderCellDef> Apellido </th>
+          <td mat-cell *matCellDef="let usuario"> {{ usuario.apellido }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dni">
+          <th mat-header-cell *matHeaderCellDef> DNI </th>
+          <td mat-cell *matCellDef="let usuario"> {{ usuario.dni }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fechaNacimiento">
+          <th mat-header-cell *matHeaderCellDef> Fecha de Nacimiento </th>
+          <td mat-cell *matCellDef="let usuario"> {{ usuario.fechaNacimiento | date }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="genero">
+          <th mat-header-cell *matHeaderCellDef> Género </th>
+          <td mat-cell *matCellDef="let usuario"> {{ usuario.genero }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="direccion">
+          <th mat-header-cell *matHeaderCellDef> Dirección </th>
+          <td mat-cell *matCellDef="let usuario"> {{ usuario.direccion }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="correo">
+          <th mat-header-cell *matHeaderCellDef> Correo </th>
+          <td mat-cell *matCellDef="let usuario"> {{ usuario.correo }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="telefono">
+          <th mat-header-cell *matHeaderCellDef> Teléfono </th>
+          <td mat-cell *matCellDef="let usuario"> {{ usuario.telefono }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let usuario">
+            <button mat-icon-button (click)="actualizarUsuario(usuario)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="confirmarEliminar(usuario)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+       
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+
+    
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </mat-card>
+</div>
+
+
+
+
+<div class="container">
+    <h2>Registrar Usuario</h2>
+    <form (ngSubmit)="registrarUsuario()" class="two-column-form">
+      <div class="form-column">
+        <label for="usuario">Usuario</label>
+        <input type="text" id="usuario" name="usuario" [(ngModel)]="nuevoUsuario.usuario" required>
+  
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" [(ngModel)]="nuevoUsuario.nombre" required>
+  
+        <label for="apellido">Apellido</label>
+        <input type="text" id="apellido" name="apellido" [(ngModel)]="nuevoUsuario.apellido" required>
+  
+        <label for="dni">DNI</label>
+        <input type="text" id="dni" name="dni" [(ngModel)]="nuevoUsuario.dni" required>
+  
+        <label for="fechaNacimiento">Fecha de Nacimiento</label>
+        <input type="date" id="fechaNacimiento" name="fechaNacimiento" [(ngModel)]="nuevoUsuario.fechaNacimiento" required>
+      </div>
+  
+      <div class="form-column">
+        <label for="genero">Género</label>
+        <select id="genero" name="genero" [(ngModel)]="nuevoUsuario.genero" required>
+          <option value="M">Masculino</option>
+          <option value="F">Femenino</option>
+        </select>
+  
+        <label for="direccion">Dirección</label>
+        <input type="text" id="direccion" name="direccion" [(ngModel)]="nuevoUsuario.direccion" required>
+  
+        <label for="correo">Correo</label>
+        <input type="email" id="correo" name="correo" [(ngModel)]="nuevoUsuario.correo" required>
+  
+        <label for="telefono">Teléfono</label>
+        <input type="tel" id="telefono" name="telefono" [(ngModel)]="nuevoUsuario.telefono" required>
+  
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" name="password" [(ngModel)]="nuevoUsuario.password" required>
+  
+        <label for="estado">Estado</label>
+        <select id="estado" name="estado" [(ngModel)]="nuevoUsuario.estado" required>
+            <option value="1">ACTIVO</option>
+            <option value="0">NO ACTIVO</option>
+          </select>
+
+
+        <label for="rol">Rol</label>
+        <select id="rol" name="rol" [(ngModel)]="nuevoUsuario.rol.id" required>
+          <option value="1">ADMIN</option>
+          <option value="2">MEDICO</option>
+          <option value="3">PACIENTE</option>
+         
+        </select>
+      </div>
+  
+      <div class="form-footer">
+        <button type="submit">Registrar</button>
+      </div>
+    </form>
+  </div>
+  
+<!-- Modal de confirmación de eliminación -->
+<div *ngIf="confirmacionEliminacionVisible" class="confirmacion-modal">
+    <div class="confirmacion-modal-contenido">
+      <h3>Confirmar Eliminación</h3>
+      <p>¿Estás seguro de que deseas eliminar al usuario {{usuarioAEliminar?.nombre}} con ID {{usuarioAEliminar?.id}}?</p>
+      <button mat-raised-button color="primary" (click)="eliminarUsuario(usuarioAEliminar?.id)">Eliminar</button>
+      <button mat-raised-button color="warn" (click)="cancelarEliminar()">Cancelar</button>
+    </div>
+  </div>
